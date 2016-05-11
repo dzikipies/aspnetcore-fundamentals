@@ -1,10 +1,23 @@
-﻿namespace OdeToFood.Controllers
+﻿using Microsoft.AspNet.Mvc;
+using OdeToFood.Models;
+using OdeToFood.Services;
+
+namespace OdeToFood.Controllers
 {
-    public class HomeController
+    public class HomeController : Controller
     {
-        public string Index()
+        private IRestaurantData _restaurantData;
+
+        public HomeController(IRestaurantData restaurantData)
         {
-            return "Hello1";
+            _restaurantData = restaurantData;
+        }
+
+        public ViewResult Index()
+        {
+            var model = _restaurantData.GetAll();
+
+            return View(model);
         }
     }
 }
