@@ -1,8 +1,5 @@
-﻿using OdeToFood.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using OdeToFood.Entities;
 
 namespace OdeToFood.Services
 {
@@ -13,13 +10,15 @@ namespace OdeToFood.Services
 
     public class InMemoryRestaurantData : IRestaurantData
     {
+        private readonly List<Restaurant> _restaurants;
+
         public InMemoryRestaurantData()
         {
             _restaurants = new List<Restaurant>
             {
-                new Restaurant { Id = 1, Name="Tersiguel's" },
-                new Restaurant { Id = 2, Name = "LJ's and the Kat" },
-                new Restaurant { Id = 3, Name = "King's Contrivance" }
+                new Restaurant {Id = 1, Name = "Tersiguel's"},
+                new Restaurant {Id = 2, Name = "LJ's and the Kat"},
+                new Restaurant {Id = 3, Name = "King's Contrivance"}
             };
         }
 
@@ -27,7 +26,5 @@ namespace OdeToFood.Services
         {
             return _restaurants;
         }
-
-        List<Restaurant> _restaurants;
     }
 }
