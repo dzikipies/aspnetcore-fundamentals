@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using OdeToFood.Services;
 using Microsoft.AspNet.Routing;
 using System;
+using Microsoft.Data.Entity;
+using OdeToFood.Entities;
 
 namespace OdeToFood
 {
@@ -25,9 +27,14 @@ namespace OdeToFood
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddEntityFramework()
+                .AddSqlServer()
+                .AddDbContext<OdeToFoodDbContext>(options => options.UseSqlServer(Configuration["database:connection"]));
+
             services.AddSingleton(provider => Configuration);
             services.AddSingleton<IGreeter, Greeter>();
-            services.AddScoped<IRestaurantData, InMemoryRestaurantData>();
+            services.AddScoped<IRestaurantData, SqlRestaurantData>();
         }
 
         // This method gets called by the runtime. 
@@ -43,7 +50,7 @@ namespace OdeToFood
             {
                 app.UseDeveloperExceptionPage();
             }
-           
+
             app.UseRuntimeInfoPage("/info");
 
             app.UseFileServer();
@@ -60,7 +67,7 @@ namespace OdeToFood
 
         private void ConfigureRoutes(IRouteBuilder routeBuilder)
         {
-            routeBuilder.MapRoute("Default", 
+            routeBuilder.MapRoute("Default",
                 "{controller=Home}/{action=Index}/{id?}");
         }
 

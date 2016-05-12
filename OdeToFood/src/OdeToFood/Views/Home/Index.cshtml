@@ -1,5 +1,4 @@
-﻿@using OdeToFood.Entities
-@model OdeToFood.ViewModels.HomePageViewModel
+﻿@model OdeToFood.ViewModels.HomePageViewModel
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Home</title>
@@ -10,7 +9,7 @@
         @foreach (var restaurant in Model.Restaurants)
         {
             <tr>
-                <td>@restaurant.Id</td>
+                <td>@Html.ActionLink(restaurant.Id.ToString(), "Details", new { id = restaurant.Id })</td>
                 <td>@restaurant.Name</td>
             </tr>
         }
